@@ -54,6 +54,8 @@ const convertAudio = (inputPath, outputPath, res) => {
             }
             fs.unlinkSync(inputPath); // 删除上传的原始文件
             console.log(`🗑️ 已删除原始文件: ${inputPath}`);
+            fs.unlinkSync(outputPath); // 删除上传的原始文件
+            console.log(`🗑️ 已删除原始文件: ${outputPath}`);
         });
     });
 };
