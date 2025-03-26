@@ -85,4 +85,4 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
 });
 
 // 启动服务器
-app.listen(3000, () => console.log("服务启动: http://localhost:3000"));
+app.listen(30000, () => console.log("服务启动: http://localhost:30000"));
