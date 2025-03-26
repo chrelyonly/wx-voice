@@ -32,7 +32,7 @@ const convertAudio = (inputPath, outputPath, res) => {
         return res.download(outputPath);
     }
 
-    voice.decode(inputPath, outputPath, { format: "mp3" }, () => {
+    voice.encode(inputPath, outputPath, { format: "silk" }, () => {
         console.log("转换完成:", outputPath);
         res.download(outputPath, (err) => {
             if (err) console.error("文件下载错误:", err);
@@ -54,7 +54,7 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
     } else if (audioUrl) {
         // 处理远程 URL 下载
         fileName = fileName || `download_${Date.now()}`;
-        inputPath = `uploads/${fileName}.sil`;
+        inputPath = `uploads/${fileName}.mp3`;
         try {
             const response = await axios.get(audioUrl, { responseType: "arraybuffer" });
             fs.writeFileSync(inputPath, Buffer.from(response.data));
@@ -65,7 +65,7 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
     } else if (base64Audio) {
         // 处理 Base64 音频
         fileName = fileName || `base64_${Date.now()}`;
-        inputPath = `uploads/${fileName}.sil`;
+        inputPath = `uploads/${fileName}.mp3`;
         try {
             const buffer = Buffer.from(base64Audio, "base64");
             fs.writeFileSync(inputPath, buffer);
@@ -77,7 +77,7 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
         return res.status(400).json({ error: "请提供音频文件、URL 或 Base64" });
     }
 
-    outputPath = `output/${fileName}.mp3`;
+    outputPath = `output/${fileName}.silk`;
     convertAudio(inputPath, outputPath, res);
 });
 
