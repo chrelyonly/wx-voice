@@ -9,9 +9,11 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /www/dk_project/dk_app/chrelyonly-wx-convert-app/app:/app
 
-    working_dir: /app
+    working_dir: /app/wx-voice
     # 运行应用
     command: node server.js
+#    command: ["sh", "-c", "tail -f /dev/null"]
+
 
 networks:
   my-network:
