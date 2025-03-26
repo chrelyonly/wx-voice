@@ -1,0 +1,20 @@
+services:
+  chrelyonly-wx-convert-app:
+    build:
+      dockerfile: Dockerfile
+    container_name: chrelyonly-wx-convert-app
+    networks:
+      - my-network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /www/dk_project/dk_app/chrelyonly-wx-convert-app/app:/app
+
+    working_dir: /app
+    # 运行应用
+    command: node server.js
+
+networks:
+  my-network:
+    name: wechat-api
+    enable_ipv6: true
+    driver: bridge
