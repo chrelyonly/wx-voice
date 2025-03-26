@@ -64,6 +64,11 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
         if (req.file) {
             // 处理文件上传
             inputPath = req.file.path;
+        //     保存至本地
+            const { originalname } = req.file;
+            fileName = fileName || originalname;
+            inputPath = `uploads/${fileName}`;
+            fs.renameSync(req.file.path, inputPath);
         } else if (audioUrl) {
             // 处理远程 URL 下载
             fileName = fileName || `download_${Date.now()}`;
