@@ -8,8 +8,10 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /www/dk_project/dk_app/chrelyonly-wx-convert-app/app:/app
+    ports:
+      - "30000:30000"  # 映射本地80端口到容器的80端口
+    working_dir: /app/wx-voice/wx-voice
 
-    working_dir: /app/wx-voice
     # 运行应用
     command: node server.js
 #    command: ["sh", "-c", "tail -f /dev/null"]

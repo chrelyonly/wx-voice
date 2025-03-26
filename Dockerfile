@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM docker.1ms.run/node:20-alpine
 
 RUN npm install wx-voice -g --registry https://registry.npmmirror.com
 RUN sed -i 's|https://dl-cdn.alpinelinux.org|https://mirrors.aliyun.com|g' /etc/apk/repositories && \
