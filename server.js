@@ -44,10 +44,10 @@ const convertAudio = (inputPath, outputPath, res) => {
         res.status(500).json({ error: "音频转换超时" });
     }, 30000);
 
-    voice.decode(inputPath, outputPath, { format: "silk" }, () => {
+    voice.decode(inputPath, outputPath, { format: "silk" }, (file) => {
         clearTimeout(timeout);
-        console.log("转换完成:", outputPath);
-        res.download(outputPath, (err) => {
+        console.log("转换完成:", file);
+        res.download(file, (err) => {
             if (err) console.error("文件下载错误:", err);
             fs.unlinkSync(inputPath); // 删除上传的原始文件
         });
@@ -64,11 +64,6 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
         if (req.file) {
             // 处理文件上传
             inputPath = req.file.path;
-        //     保存至本地
-            const { originalname } = req.file;
-            fileName = fileName || originalname;
-            inputPath = `uploads/${fileName}`;
-            fs.renameSync(req.file.path, inputPath);
         } else if (audioUrl) {
             // 处理远程 URL 下载
             fileName = fileName || `download_${Date.now()}`;
