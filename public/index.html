@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语音转 SILK</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- 引入 Axios -->
+</head>
+<body>
+<h2>上传音频文件转换为 SILK</h2>
+<input type="file" id="fileInput" />
+<button onclick="uploadFile()">转换</button>
+<p id="status"></p>
+
+<script>
+    function uploadFile() {
+        let fileInput = document.getElementById("fileInput").files[0];
+        if (!fileInput) return alert("请选择文件！");
+
+        let formData = new FormData();
+        formData.append("audio", fileInput);
+
+        axios.post("/convert", formData, {
+            responseType: "blob" // 确保返回二进制数据
+        }).then(response => {
+            let url = window.URL.createObjectURL(response.data);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "converted.sil"; // 修改为正确的文件名
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            document.getElementById("status").innerText = "转换完成！";
+        }).catch(() => {
+            document.getElementById("status").innerText = "转换失败！";
+        });
+    }
+</script>
+</body>
+</html>
