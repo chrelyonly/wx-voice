@@ -46,7 +46,7 @@ const convertAudio = (inputPath, outputPath, res) => {
         const duration = ((endTime - startTime) / 1000).toFixed(2); // 计算转换耗时（秒）
 
         console.log(`🎉 转换完成: ${outputPath} (耗时 ${duration} 秒)`);
-        res.download(outputPath, (err) => {
+        res.download(outputPath, `${Date.now()}.silk`, (err) => {
             if (err) {
                 console.error("⚠️ 文件下载错误:", err);
             } else {
