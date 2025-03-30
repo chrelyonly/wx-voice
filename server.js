@@ -52,8 +52,8 @@ const convertAudio = (inputPath, outputPath, res) => {
             } else {
                 console.log(`⬇️ 文件下载成功: ${outputPath}`);
             }
-            fs.unlinkSync(inputPath); // 删除上传的原始文件
-            console.log(`🗑️ 已删除原始文件: ${inputPath}`);
+            // fs.unlinkSync(inputPath); // 删除上传的原始文件
+            // console.log(`🗑️ 已删除原始文件: ${inputPath}`);
             // fs.unlinkSync(outputPath); // 删除上传的原始文件
             // console.log(`🗑️ 已删除原始文件: ${outputPath}`);
         });
@@ -79,6 +79,10 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
         console.log(`🌍 远程下载音频: ${audioUrl}`);
 
         try {
+            if (fs.existsSync(inputPath)) {
+                console.log(`✅ 文件已存在，直接返回: ${inputPath}`);
+                return res.download(inputPath);
+            }
             const response = await axios.get(audioUrl, { responseType: "arraybuffer" });
             fs.writeFileSync(inputPath, Buffer.from(response.data));
             console.log(`✅ 下载成功，存储路径: ${inputPath}`);
