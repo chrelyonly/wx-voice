@@ -79,9 +79,10 @@ app.post("/convert", upload.single("audio"), async (req, res) => {
         console.log(`🌍 远程下载音频: ${audioUrl}`);
 
         try {
-            if (fs.existsSync(inputPath)) {
-                console.log(`✅ 文件已存在，直接返回: ${inputPath}`);
-                return res.download(inputPath);
+            outputPath = `output/${fileName}.silk`;
+            if (fs.existsSync(outputPath)) {
+                console.log(`✅ 文件已存在，直接返回: ${outputPath}`);
+                return res.download(outputPath);
             }
             const response = await axios.get(audioUrl, { responseType: "arraybuffer" });
             fs.writeFileSync(inputPath, Buffer.from(response.data));
