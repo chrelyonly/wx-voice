@@ -8,7 +8,7 @@
   },
   "private": true,
   "dependencies": {
-    "axios": "^1.8.4",
+    "axios": "^1.13.5",
     "express": "^4.21.2",
     "multer": "2.0.2",
     "wx-voice": "^0.2.1"
